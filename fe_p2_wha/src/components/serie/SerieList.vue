@@ -23,6 +23,7 @@ const seriesFiltradas = computed(() => {
     (serie) =>
       serie.titulo.toLowerCase().includes(busqueda.value.toLowerCase()) ||
       serie.director.toLowerCase().includes(busqueda.value.toLowerCase()) ||
+      serie.tipoClasificacion.toLowerCase().includes(busqueda.value.toLowerCase()) ||
       serie.pais.descripcion.toLowerCase().includes(busqueda.value.toLowerCase()),
   )
 })
@@ -57,7 +58,7 @@ defineExpose({ obtenerLista })
         <InputText
           v-model="busqueda"
           type="text"
-          placeholder="Buscar por título o director o país"
+          placeholder="Buscar por título o director o país o tipo de clasificación"
         />
       </InputGroup>
     </div>
@@ -73,8 +74,9 @@ defineExpose({ obtenerLista })
       <Column field="titulo" header="Título" sortable />
       <Column field="director" header="Director" sortable />
       <Column field="temporadas" header="Temporadas" />
-      <Column field="fechaEstreno" header="Estreno" />
+      <Column field="fechaEstreno" header="Fecha de Estreno" />
       <Column field="pais.descripcion" header="País" />
+      <Column field="tipoClasificacion" header="Tipo de Clasificación" sortable />
       <Column header="Acciones" frozen alignFrozen="right" style="min-width: 120px">
         <template #body="{ data }">
           <Button icon="pi pi-pencil" aria-label="Editar" text @click="emitirEdicion(data)" />

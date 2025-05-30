@@ -37,4 +37,8 @@ export class CreateSerieDto {
   @IsDefined({ message: 'El campo fechaEstreno debe estar definido' })
   @IsDateString({}, { message: 'El campo fechaEstreno debe ser tipo fecha' })
   readonly fechaEstreno: Date;
+
+  @ApiProperty()
+  @IsString({ message: 'El campo tipo de clasificación debe ser de tipo cadena' })
+  readonly tipoClasificacion: string;
 }

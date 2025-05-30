@@ -12,6 +12,13 @@ import { ref, computed, watch } from 'vue'
 
 const ENDPOINT = 'series'
 
+const tiposClasificacion = [
+  { label: 'A', value: 'A' },
+  { label: 'B', value: 'B' },
+  { label: 'B+15', value: 'B+15' },
+  { label: 'C', value: 'C' },
+]
+
 const props = defineProps({
   mostrar: Boolean,
   serie: {
@@ -45,9 +52,10 @@ async function handleSave() {
       sinopsis: serie.value.sinopsis,
       director: serie.value.director,
       temporadas: serie.value.temporadas,
+      tipoClasificacion: serie.value.tipoClasificacion,
       fechaEstreno: serie.value.fechaEstreno
-      ? serie.value.fechaEstreno.toISOString().split('T')[0] // Esto da "YYYY-MM-DD"
-    : null,
+        ? serie.value.fechaEstreno.toISOString().split('T')[0] // Esto da "YYYY-MM-DD"
+        : null,
     }
     if (props.modoEdicion) {
       await http.patch(`${ENDPOINT}/${serie.value.id}`, body)
@@ -79,6 +87,7 @@ watch(
           sinopsis: '',
           director: '',
           temporadas: 1,
+          tipoClasificacion: '',
           fechaEstreno: new Date(),
           pais: { id: 0, descripcion: '' },
         }
@@ -86,8 +95,6 @@ watch(
     }
   },
 )
-
-
 </script>
 
 <template>
@@ -148,6 +155,19 @@ watch(
       <div class="flex items-center gap-4 mb-4">
         <label for="fecha_estreno" class="font-semibold w-3">Fecha de estreno</label>
         <Calendar v-model="serie.fechaEstreno" date-format="yy-mm-dd" showIcon class="flex-auto" />
+      </div>
+      <div class="flex items-center gap-4 mb-4">
+        <label for="tipo_clasificacion" class="font-semibold w-3">Tipo de Clasificación</label>
+        <Select
+          id="tipo_clasificacion"
+          v-model="serie.tipoClasificacion"
+          :options="tiposClasificacion"
+          optionLabel="label"
+          optionValue="value"
+          placeholder="Seleccione una clasificación"
+          class="flex-auto"
+          autofocus
+        />
       </div>
       <div class="flex justify-end gap-2">
         <Button

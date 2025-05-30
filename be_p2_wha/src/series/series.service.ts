@@ -24,6 +24,7 @@ export class SeriesService {
     serie.director = createSerieDto.director.trim();
     serie.temporadas = createSerieDto.temporadas;
     serie.fechaEstreno = createSerieDto.fechaEstreno;
+    serie.tipoClasificacion = createSerieDto.tipoClasificacion.trim();
     return this.seriesRepository.save(serie);
   }
 
@@ -37,6 +38,7 @@ export class SeriesService {
         director: true,
         temporadas: true,
         fechaEstreno: true,
+        tipoClasificacion: true,
         pais: { id: true, descripcion: true },
       },
     });
